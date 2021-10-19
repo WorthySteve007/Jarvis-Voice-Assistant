@@ -15,11 +15,13 @@ import webbrowser
 import socket
 import os
 import smtplib
-
 import ctypes
 import time
 import shutil
 from urllib.request import urlopen
+
+
+
 engine=pyttsx3.init('sapi5')
 voices=engine.getProperty('voices')
 engine.setProperty('voice',voices[0].id)
@@ -166,6 +168,25 @@ if __name__ =='__main__':
             webbrowser.open("https://www.google.nl/maps/place/" + location + "")
         elif "restart" in query:
             subprocess.call(["shutdown", "/r"])
+        elif 'news' in query:
+             
+            try:
+                jsonObj = urlopen("https://newsapi.org/v2/top-headlines?country=in&apiKey=e57f1773ec0f484f8471bb4693a3e095")
+                data = json.load(jsonObj)
+                i = 1
+                 
+                speak('here are some top news from the times of india')
+                print('''=============== TIMES OF INDIA ============'''+ '\n')
+                 
+                for item in data['articles']:
+                     
+                    print(str(i) + '. ' + item['title'] + '\n')
+                    print(item['description'] + '\n')
+                    speak(str(i) + '. ' + item['title'] + '\n')
+                    i += 1
+            except Exception as e:
+                 
+                print(str(e))
         elif 'email' in query:
             try:
                 speak("What should I say?")
