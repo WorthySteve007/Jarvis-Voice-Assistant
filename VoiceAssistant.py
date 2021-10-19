@@ -78,19 +78,17 @@ def username():
     speak("What should i call you sir")
     uname = takeCommand()
     speak("User name added")
-    speak("Welcome Master")
+    speak("Welcome")
     speak(uname)
     columns = shutil.get_terminal_size().columns
      
     
     print("Welcome Mr.", uname.center(columns))
-
-     
-    speak("How can i Help you, Sir")
 if __name__ =='__main__':
     clear = lambda: os.system('cls')
-    wishme()
+    
     username()
+    wishme()
     while True:
         query = takeCommand().lower() #Converting user query into lower case
 
@@ -158,8 +156,7 @@ if __name__ =='__main__':
             IPAddr= socket.gethostbyname(hostname)
             speak(IPAddr)
             print(IPAddr)
-        elif "jarvis" in query:
-            speak("Yes sir what you want me to do")
+        
         elif "where is" in query:
             query = query.replace("where is", "")
             location = query
