@@ -5,9 +5,21 @@ import speech_recognition as sr
 import wikipedia
 import os
 import smtplib
+import subprocess
+import tkinter
+import json
+import random
+import operator
+import datetime
+import webbrowser
+import socket
+import os
+import smtplib
 
-
-
+import ctypes
+import time
+import shutil
+from urllib.request import urlopen
 engine=pyttsx3.init('sapi5')
 voices=engine.getProperty('voices')
 engine.setProperty('voice',voices[0].id)
@@ -18,6 +30,7 @@ def speak(audio):
     '''
     engine.say(audio)
     engine.runAndWait()
+
 
 def wishme():
     hour =int(datetime.datetime.now().hour)
@@ -58,11 +71,25 @@ def sendEmail(to,content):
     server.sendmail('sendergmailadd@gmail.com',to,content)
     server.close()
 
+
+def username():
+    speak("What should i call you sir")
+    uname = takeCommand()
+    speak("User name added")
+    speak("Welcome Master")
+    speak(uname)
+    columns = shutil.get_terminal_size().columns
+     
+    
+    print("Welcome Mr.", uname.center(columns))
+
+     
+    speak("How can i Help you, Sir")
 if __name__ =='__main__':
-    #speak("Risav Katara is a good Boy")
+    clear = lambda: os.system('cls')
     wishme()
+    username()
     while True:
-    # if 1:
         query = takeCommand().lower() #Converting user query into lower case
 
         # Logic for executing tasks based on query
@@ -89,6 +116,56 @@ if __name__ =='__main__':
         elif 'the time' in query:
             strTime=datetime.datetime.now().strftime("%H:%M:%S")
             speak(f'The time is {strTime}')
+        elif 'search' in query or 'play' in query:
+             
+            query = query.replace("search", "")
+            query = query.replace("play", "")         
+            webbrowser.open(query)
+        
+        elif "who i am" in query:
+            speak("If you talk then definitely your human.")
+ 
+        elif "why you came to world" in query:
+            speak("Thanks to Risav Katara He created me")
+        elif "will you be my gf" in query or "will you be my bf" in query:  
+            speak("I'm not sure about, may be you should give me some time")
+ 
+        elif "how are you" in query:
+            speak("I'm fine, glad you me that")
+        elif 'lock window' in query:
+                speak("locking the device")
+                ctypes.windll.user32.LockWorkStation()
+        elif "what's your name" in query or "what is your name" in query:
+            speak("My friends call me Jarvis")
+            print("My friends call me Jarvis")
+        elif 'shutdown system' in query:
+                speak("Hold On a Sec ! Your system is on its way to shut down")
+                subprocess.call('shutdown / p /f')
+                 
+        elif 'empty recycle bin' in query:
+            winshell.recycle_bin().empty(confirm = False, show_progress = False, sound = True)
+            speak("Recycle Bin Recycled")
+        elif "i love you" in query:
+            speak("It's hard to understand")
+        elif 'you need a break' in query:
+            speak('Sir you can call me anytime')
+            speak('Just say wake up Jarvis')
+            break
+        elif 'ip' in query:
+            hostname =socket.gethostname()
+            IPAddr= socket.gethostbyname(hostname)
+            speak(IPAddr)
+            print(IPAddr)
+        elif "jarvis" in query:
+            speak("Yes sir what you want me to do")
+        elif "where is" in query:
+            query = query.replace("where is", "")
+            location = query
+            speak("User asked to Locate")
+            speak(location)
+            webbrowser.open("https://www.google.nl/maps/place/" + location + "")
+        elif "restart" in query:
+            subprocess.call(["shutdown", "/r"])
         elif 'email' in query:
             try:
                 speak("What should I say?")
